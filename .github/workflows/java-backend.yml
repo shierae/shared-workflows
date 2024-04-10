@@ -33,7 +33,7 @@ jobs:
 
     - name: Setup NPM
       run: |
-        npm install -g npm@${{ inputs.context_path }}
+        npm install -g npm@${{ inputs.npm_version }}
         npm --version
       shell: bash
 
