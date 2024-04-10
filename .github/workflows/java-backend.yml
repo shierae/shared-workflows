@@ -8,6 +8,11 @@ on:
         type: string
         description: "Set the context path"
         default: '.'
+      npm_version:
+        type: string
+        required: false
+        description: 'The NPM version to use'
+        default: '10.2.4'
 
 jobs:
   build:
@@ -28,7 +33,7 @@ jobs:
 
     - name: Setup NPM
       run: |
-        npm install -g npm
+        npm install -g npm@${{ inputs.context_path }}
         npm --version
       shell: bash
 
