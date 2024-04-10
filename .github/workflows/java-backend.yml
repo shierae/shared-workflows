@@ -10,8 +10,7 @@ on:
         default: '.'
       skip_tests:
         required: true
-        type: string
-        default: 'true'
+        default: true
 
 jobs:
   build:
