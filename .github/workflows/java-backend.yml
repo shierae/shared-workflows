@@ -9,7 +9,8 @@ on:
         description: "Set the context path"
         default: '.'
       skip_tests:
-        required: true
+        required: false
+        type: boolean
         default: true
 
 jobs:
