@@ -8,11 +8,6 @@ on:
         type: string
         description: "Set the context path"
         default: '.'
-      npm_version:
-        type: string
-        required: false
-        description: 'The NPM version to use'
-        default: '10.2.4'
 
 jobs:
   build:
@@ -27,31 +22,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-
-    - name: Setup NPM
-      run: |
-        npm install -g npm@${{ inputs.npm_version }}
-        npm --version
-      shell: bash
-
-    - name: Install changesets cli
-      run: npm install @changesets/cli --legacy-peer-deps
-
-    - name: Determine changed packages
-      working-directory: ${{ inputs.context_path }}
-      run: |
-        ./node_modules/.bin/changeset status | cut -f 3- -d ' ' | sed -n '/- /p' | cut -f 2- -d ' ' > changed_package.txt
-      shell: bash
-
-    - name: Run changeset release
-      working-directory: ${{ inputs.context_path }}
-      run: |
-          echo "Generating new version from changeset"
-          ./node_modules/.bin/changeset version
-      shell: bash
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
