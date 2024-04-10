@@ -10,7 +10,7 @@ on:
         default: '.'
       skip_tests:
         required: false
-        type: boolean
+        type: string
         default: true
 
 jobs:
