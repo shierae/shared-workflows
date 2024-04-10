@@ -1,10 +1,13 @@
 name: Java CI with Maven
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_call:
+    inputs:
+      context_path:
+        required: false
+        type: string
+        description: "Set the context path"
+        default: '.'
 
 jobs:
   build:
@@ -33,13 +36,13 @@ jobs:
       run: npm install @changesets/cli --legacy-peer-deps
 
     - name: Determine changed packages
-      working-directory: '.'
+      working-directory: ${{ inputs.context_path }}
       run: |
         ./node_modules/.bin/changeset status | cut -f 3- -d ' ' | sed -n '/- /p' | cut -f 2- -d ' ' > changed_package.txt
       shell: bash
 
     - name: Run changeset release
-      working-directory: '.'
+      working-directory: ${{ inputs.context_path }}
       run: |
           echo "Generating new version from changeset"
           ./node_modules/.bin/changeset version
